@@ -1,0 +1,10 @@
+int main(int argc, char **argv) {
+	int x = 3;
+	int a[3] = { 1, 2, 3 };
+	int b[3] = { 2, 3, 4 };
+	int *p = a;
+	int *q = b;
+	*p = NULL;/*p points to the array itself to a[0] - will change array to {NULL, 2,3}*/
+	getchar();
+	return 0;
+}

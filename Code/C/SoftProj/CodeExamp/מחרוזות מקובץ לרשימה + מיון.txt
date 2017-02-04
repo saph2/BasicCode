@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
+#include <ctype.h>
+
+struct List{
+	char *info;
+	struct List *next;
+}lst;
+
+int count = 0;
+
+void create(FILE *fileName, struct List **lst){
+	char c;
+	int len;
+	struct List *start;
+	start = *lst;
+	while ((c = fgetc(fileName)) != EOF)
+	{
+		if (c != '\n' && !isspace(c)){
+				(*lst)->next = (struct List*)malloc(sizeof(struct  List));
+				assert((*lst)->next != NULL);
+				count++;
+				len = 1;
+				*lst = (*lst)->next;
+				(*lst)->next = NULL;
+				(*lst)->info = (char*)calloc(1*sizeof(char));
+				assert((*lst)->info != NULL);
+				((*lst)->info)[0]=c;
+				while ((c = fgetc(fileName)) != EOF && c != '\n' && !isspace(c)){
+						(*lst)->info = (char*)realloc((*lst)->info, (++len)*(sizeof((*lst)->info)));
+						assert((*lst)->info != NULL);
+						((*lst)->info)[len - 1] = c;
+				}
+		}
+	}
+	*lst = start;
+}
+
+void print(struct List *lst){
+	struct List *cur;
+	cur = lst;
+	while (cur->next != NULL){
+		cur = cur->next;
+		printf("%s\n", cur->info);
+	}
+}
+
+void delte(struct List **lst){
+	struct List *cur;
+	cur = (*lst);
+	if (cur->next != NULL){/*first item has no info*/
+		(*lst) = cur->next;
+		free(cur);
+		cur = (*lst);
+	}
+	while (cur->next != NULL){
+		(*lst) = cur->next;
+		free(cur->info);
+		free(cur);
+		cur = (*lst);
+	}
+	free(cur->info);
+	free(cur);
+}
+
+void insert(char *word, struct List **lst){
+	/*before last place*/
+	struct List* start;
+	struct List* newItem = (struct List*)malloc(sizeof(struct List));
+	int len = sizeof(word);
+	newItem->info = (char*)calloc(len*sizeof(char));
+	newItem->info = word;
+	start = *lst;
+	while ((*lst)->next != NULL && (*lst)->next ->next!= NULL){
+		(*lst) = (*lst)->next;
+	}
+	newItem->next = (*lst)->next;
+	(*lst)->next = newItem;
+	(*lst) = start;
+}/*prints 12345678b9*/
+
+void sort(struct List **lst){
+	struct List* start;
+	char *temp_info;
+	int sorted = 0;
+	start = *lst;
+	(*lst) = (*lst)->next;
+	assert((*lst) != NULL);
+	while (sorted < count-1){/*while we have no order*/
+		if ((*lst)->next != NULL){
+			while ((*lst)->next != NULL && strcmp((*lst)->info,(*lst)->next->info)>0){/*switch plces for each two*/
+				sorted = 0;
+				temp_info = ((*lst)->next->info);
+				(*lst)->next->info=(*lst)->info;
+				(*lst)->info=temp_info;
+				(*lst) = (*lst)->next;
+			}
+		}
+		if ((*lst)->next != NULL){
+			(*lst) = (*lst)->next;
+			sorted++;/*count numbers in order*/
+		}
+		else if (sorted < count-1) {
+			sorted = 0;
+			(*lst) = start->next;
+		}
+	}
+	(*lst) = start;
+}
+
+int main(int argc, char **argv){
+	FILE *inFile = NULL;
+	struct List* lst = (struct List*)malloc(sizeof(struct List));
+	assert(lst != NULL);
+	inFile = fopen(argv[1], "r");
+	assert(inFile != NULL);
+	create(inFile, &lst);
+	insert("Hi", &lst);
+	sort(&lst);
+	print(lst);
+	delte(&lst);
+	fclose(inFile);
+	getchar();
+	return 0;
+}

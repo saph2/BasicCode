@@ -1,0 +1,14 @@
+int main(int argc, char* argv[])
+{
+	int i, s;
+	char *p;
+	s = 0;
+	for (i = 1; i<argc; i++)
+	{
+		for (p = argv[i]; *p; p++);
+		s += (p - argv[i]);/*p point to the begining of the next word*/
+	}
+	printf("%d\n", s);/*prints sum of words lenght*/
+	getchar();
+	return 0;
+}

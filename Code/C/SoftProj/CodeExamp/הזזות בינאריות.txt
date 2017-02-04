@@ -1,0 +1,16 @@
+int main(int argc, char *argv[]){
+	int x = 10;
+	printf("%d\n", (x << 1)); /*prints 20*/
+	printf("%d\n", (x >> 2)); /*prints 2*/
+	printf("%d\n", (x & 1)); /*prints 0*/
+	printf("%d\n", (x | 1)); /*prints 11*/
+	printf("%d\n", (x & -2)); /*prints 10*/
+	printf("%d\n", (x | -1)); /*prints -1*/
+	printf("%d\n", (x << -1)); /*prints 0*/
+	printf("%d\n", (x >> -1)); /*prints 0*/
+	x = 11;
+	printf("%d\n", (x << -1)); /*prints -2467638*/
+	printf("%d\n", (x >> -1)); /*prints 0*/
+	getchar();
+	return 0;
+}

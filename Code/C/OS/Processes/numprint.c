@@ -1,0 +1,1 @@
+#include <sys/types.h>#include <sys/wait.h> // for wait macros etc#include <stdio.h>#include <stdlib.h>#include <assert.h>int main(int argc, char** argv){	assert(argc == 2);		int num;	assert(sscanf(argv[1], "%d", &num) == 1);		int i;	for (i = 0; i < num; ++i) {		printf("pid=%d , num=%d\n", getpid(), i);		sleep(1);	}		printf("Done (pid=%d)\n", getpid());}

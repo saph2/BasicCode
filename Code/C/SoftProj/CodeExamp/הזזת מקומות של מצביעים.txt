@@ -1,0 +1,20 @@
+
+void foo(int *a, int b){
+	(*a)++; *a=p=280+1=281
+	b+=(*a); b=360+281
+	(*a)-=b; *a=p=281-360-281=-360
+}
+
+int main(){
+	int *p=0
+	int a,b;
+	char *d;
+	p=p+70; 0+70*4=280
+	d=(char *)p;
+	d+=80; 280+80*1=360
+	a=(int)p; a=280
+	b=(int)d; b=360
+	foo(&a,b);
+	printf("a=%d b=%d",a,b); a=-360, b=360
+	return 0;
+}

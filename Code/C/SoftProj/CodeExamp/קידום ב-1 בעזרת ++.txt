@@ -1,0 +1,23 @@
+int main(int argc, char *argv[]){
+	int x = 10;
+	printf("%d\n", ++x);/*advance x and prints 11*/
+	printf("%d\n", x++);/*prints 11 and advance x*/
+	int y = 10;
+	printf("%d\n", y++);/*pritns 10 and advance y*/
+	printf("%d\n", ++y);/*advance y and prints 12*/
+	getchar();
+	return 0;
+}
+
+##########################
+
+int main(int argc, char *argv[]){
+	char *x = "10";
+	printf("%c\n", (*++x));/*advance x and prints 0*/
+	printf("%c\n", (*x++));/*prints 0*/
+	char *y = "10";
+	printf("%c\n", (*y++));/*pritns 1 and advance y*/
+	printf("%c\n", (*++y));/*advance y and prints empty space ("\0")*/
+	getchar();
+	return 0;
+}

@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+int BtoD(char *number){
+	int len = strlen(number);
+	int dec = 0;
+	int i;
+	for (i = 0; i < len; i++){
+		dec += ((number[len-i-1]-48) * pow(2, i));
+	}
+	return dec;
+}
+
+int main()
+{
+	char *x = "10";
+	int dec = BtoD(x);
+	printf("%d\n", dec);
+	getchar();
+	return(0);
+}

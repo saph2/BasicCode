@@ -1,0 +1,22 @@
+void foo(int *p1, int*p2){ /*recives the pointers to the arrays*/
+	p1 = p2;/*p1 points to m[0] - local change will not be saved*/
+	*p1 = *p2 + 1;/*value of array in m[0] will change - m[0]=m[0]+1*/
+}
+
+void bar(int **p1, int **p2){/*p1 and p2 are now pointers to the (*) pointers of (**) n and m*/
+	p1 = p2;/* p1 points to the pointer to m[0] - local change will not be saved*/
+	*p1 = *p2 + 1;/* *p2 (content of p2) was progressed to m[1] (p1 already points to *p2 temporerly, p1 content wasn't tuched) - change for p2 will be saved*/
+	**p1 = **p2 + 2;/*value of array in m[1] will change - m[1]=m[1]+2*/
+}
+
+int main(int argc, char **argv) {
+	int n[3] = { 1, 2, 3 };
+	int m[3] = { 4, 5, 6 };
+	int *p1 = n;
+	int *p2 = m;
+	foo(p1, p2);/*n={1,2,3}, m={5,5,6}*/
+	bar(&p1, &p2);/*n={1,2,3}, m={5,7,6}*/
+	printf("%d, %d", *p1, *p2);/*p1 points to n[0] = '1', p2 points to m[1]='7'*/
+	getchar();
+	return 0;
+}

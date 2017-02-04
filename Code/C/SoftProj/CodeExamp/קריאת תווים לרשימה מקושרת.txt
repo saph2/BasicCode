@@ -1,0 +1,83 @@
+struct List{
+	char info;
+	struct List *next;
+	struct List *prev;
+};
+
+void create (FILE *fileName, struct List **lst){
+	char c;
+	struct List *cur;
+	struct List *start = (struct List*)malloc(sizeof(struct  List));
+	start->info = NULL;
+	while ((c = fgetc(fileName)) != EOF)
+	{
+		cur = (struct List*)malloc(sizeof(struct  List));
+		cur->next = NULL;
+		cur->info = c;
+		cur->prev = (start);
+		start->next = cur;
+		start = start->next;
+		**(lst) = *start;
+		printf("%c\n", c);
+	}
+}
+
+void print(struct List *lst){
+	struct List *cur;
+	cur = lst;
+	while (cur->info != NULL){
+		printf("%c\n", cur->info);
+		cur = cur->prev;	
+	}
+}
+
+void delte(struct List* lst){
+	struct List *cur;
+	while (lst->info != NULL){
+		cur = lst;
+		lst = lst->prev;
+		free(cur);
+	}
+}
+
+void insert(char a, char b, struct List **lst){
+	struct List *cur= (*lst);
+	struct List *newB;
+	while (cur->info != NULL && cur->info != a){
+		cur = cur->prev;
+		if (cur == NULL){
+			exit(0);
+		}
+	}
+	if (cur->info == a || cur->info == NULL){
+		newB = (struct List*)malloc(sizeof(struct List));
+		newB->info = b;
+		if (cur->info != NULL && cur != lst){
+			newB->next = cur->next;
+		}
+		newB->prev = cur;
+		cur->next = newB;
+		while (cur->next != NULL){
+			cur = cur->next;
+		}
+		**lst = *cur;
+	}
+}
+
+int main(int argc,char **argv){
+	char *inFile=NULL;
+	struct List* lst = (struct List*)malloc(sizeof(struct List));
+	struct List** list = &(lst);
+	inFile = fopen(argv[1],"r");
+	if (inFile != NULL){
+		lst->info = NULL;
+		create(inFile, list);
+		list = &(lst);
+		insert('9', '2',list);
+		print(lst);
+		delte(lst);
+		fclose(inFile);
+	}
+	getchar();
+	return 0;
+}

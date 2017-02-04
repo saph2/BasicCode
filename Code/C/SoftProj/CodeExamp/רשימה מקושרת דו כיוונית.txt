@@ -1,0 +1,55 @@
+struct List{
+	struct List *next;
+};
+
+int main() {
+	struct List *a = (struct List*) malloc(sizeof(struct List));/*the currect form*/
+}
+
+###################################
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Node{
+	char tav;
+	struct Node *next;
+	struct Node *prev;
+};
+
+int main(int argc, char *argv[]){
+	char *str = argv[1];
+	int len = strlen(str);
+	struct Node* a;
+	int i;
+	struct Node *start=(struct Node*)malloc(sizeof(struct Node));
+	struct Node *cur = (struct Node*)malloc(sizeof(struct Node));
+	struct Node *temp;
+	if (len != 0){
+		i = 0;
+		while (i<len){
+			a = (struct Node*)malloc(sizeof(struct Node));
+			a->tav = str[i];
+			if (i == 0){
+				start = a;
+				cur = a;
+			}
+			else{
+				cur->next = a;
+				a->prev = cur;
+				cur = a;
+			}
+			i++;
+		}
+		while (cur!=start){
+			printf("%c", cur->tav);
+			cur = cur->prev;
+			temp = cur->next;
+			free(temp);
+		}
+		printf("%c", start->tav);
+		free(start);
+	}
+	getchar();
+	return 0;
+}

@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
+
+struct List{
+	char info;
+	struct List *next;
+}lst;
+
+int count = 0;
+
+void create(FILE *fileName, struct List **lst){
+	char c;
+	struct List *start;
+	start = *lst;
+	while ((c = fgetc(fileName)) != EOF)
+	{
+		if (c != '\n'){
+			(*lst)->next = (struct List*)malloc(sizeof(struct  List));
+			assert((*lst)->next != NULL);
+			count++;
+			(*lst)->next->info = c;
+			*lst = (*lst)->next;
+			(*lst)->next = NULL;
+		}
+	}
+	*lst = start;
+}
+
+void print(struct List *lst){
+	struct List *cur;
+	cur = lst;
+	while (cur->next != NULL){
+		cur = cur->next;
+		printf("%c", cur->info); /*prints 123456789*/
+	}
+}
+
+void delte(struct List* lst){
+	struct List *cur;
+	cur = lst;
+	while (cur->next != NULL){
+		lst = cur->next;
+		free(cur);
+		cur = lst;
+	}
+	free(cur);
+}
+
+void insert(char b, struct List **lst){
+	/*before last place*/
+	struct List* start;
+	struct List* newItem = (struct List*)malloc(sizeof(struct List));
+	newItem->info = b;
+	start = *lst;
+	while ((*lst)->next != NULL && (*lst)->next ->next!= NULL){
+		(*lst) = (*lst)->next;
+	}
+	newItem->next = (*lst)->next;
+	(*lst)->next = newItem;
+	(*lst) = start;
+}/*prints 12345678b9*/
+
+void sort(struct List **lst){
+	struct List* start;
+	char temp_info;
+	int sorted = 0;
+	start = *lst;
+	(*lst) = (*lst)->next;
+	assert((*lst) != NULL);
+	while (sorted < count){/*while we have no order*/
+		if ((*lst)->next != NULL){
+			while ((*lst)->next != NULL && (*lst)->info >(*lst)->next->info){/*switch plces for each two*/
+				sorted = 0;
+				temp_info = (*lst)->next->info;
+				(*lst)->next->info = (*lst)->info;
+				(*lst)->info = temp_info;
+				(*lst) = (*lst)->next;
+			}
+		}
+		if ((*lst)->next != NULL){
+			(*lst) = (*lst)->next;
+			sorted++;/*count numbers in order*/
+		}
+		else if (sorted < count) {
+			sorted = 0;
+			(*lst) = start->next;
+		}
+	}
+	(*lst) = start;/*now we have 1234556789*/
+}
+
+int main(int argc, char **argv){
+	FILE *inFile = NULL;
+	struct List* lst = (struct List*)malloc(sizeof(struct List));
+	assert(lst != NULL);
+	inFile = fopen(argv[1], "r");
+	assert(inFile != NULL);
+	create(inFile, &lst);
+	insert('5', &lst);
+	sort(&lst);
+	print(lst);
+	delte(lst);
+	fclose(inFile);
+	getchar();
+	return 0;
+}

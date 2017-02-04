@@ -1,0 +1,19 @@
+int a;
+
+int main(int argc, char* argv[])
+{
+	scanf("%d", &a);/*legel input a will recive a value*/
+	a++;
+	printf("%d\n", a);
+	getchar();
+	return 0;
+}
+########################################
+int main(int argc, char* argv[])
+{
+	scanf("%d", &a);
+	a++;
+	printf("%d\n", a);
+	getchar();
+	return 0;
+}int a;/*will run but with a worning*/

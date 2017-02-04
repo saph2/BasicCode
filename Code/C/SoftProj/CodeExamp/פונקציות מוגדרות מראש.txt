@@ -1,0 +1,13 @@
+#define MAC(a,b) (a<b?a*b:a-b)
+
+int main(int argc, char **argv) {
+	int i = 2;
+	int j = 4;
+	int k = MAC(i, j);
+	int l = MAC(j, i);
+	i = MAC(k + l, k - l);/*prints k+l-k-l*/
+	j = MAC(k - l, k + l);/*prints k-l*k+l*/
+	printf("%d, %d", i, j);
+	getchar();
+	return 0;
+}

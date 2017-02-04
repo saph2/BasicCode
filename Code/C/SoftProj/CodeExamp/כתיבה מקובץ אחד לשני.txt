@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main(int argc,char **argv){
+	char *inFile=NULL, *outFile=NULL;
+	char c;
+	inFile = fopen(argv[1],"r");
+	if (inFile != NULL){
+		outFile = fopen(argv[2], "w");
+		if (outFile != NULL){
+			while ((c = fgetc(inFile)) != EOF)
+			{
+				fputc(c, outFile);
+				if (c == '\n')/*if we want double space, else remove*/
+					fputc('\n', outFile);
+			}
+			fclose(outFile);
+		}
+		fclose(inFile);
+	}
+	return 0;
+}

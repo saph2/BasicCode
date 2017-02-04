@@ -1,0 +1,10 @@
+int main(){
+	char arr[3][3] = { { '1', '2' }, { '3', '4' } };
+	printf("%c\n", **arr);/*prints 1*/
+	printf("%c\n", **arr+1);/*prints 2*/
+	printf("%s\n", *arr);/*prints 12 - size 3 for string!*/
+	printf("%s\n", *arr+1);/*prints 2*/
+	printf("%s\n", *arr + 3);/*prints 34*/
+	getchar();
+	return 0;
+}

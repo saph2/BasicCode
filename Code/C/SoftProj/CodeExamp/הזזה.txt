@@ -1,0 +1,12 @@
+#define PAR(x,y) (!(x >> y)) 
+int main()
+{
+	int i, k;
+	i = 32;
+	k = (i >> 3) & 1;
+	printf("%d\n", i);/*i will not change - i=32*/
+	k += PAR(i, 4);
+	printf("%d\n", k);/*k=0*/
+	getchar();
+	return 0;
+}

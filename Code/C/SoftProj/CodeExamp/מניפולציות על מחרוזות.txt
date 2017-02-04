@@ -1,0 +1,38 @@
+int main() {
+	int i = 0;
+	char a[] = "hello";
+	strcpy(a,"you");
+	printf("%s", a);/*output "you"*/
+	getchar();
+	return 0;
+}
+
+int main() {
+	int i = 0;
+	char a[] = "hello";
+	char b[] = "you";
+	strcpy(b,a);
+	printf("%s %s", a,b);/*output "hello hello"*/
+	getchar();
+	return 0;
+}
+
+int main() {
+	int i = 0;
+	char v[5];
+	char s[] = "the format is: %s";
+	sprintf(v, s,"5");
+	puts(v);
+	/*the output is "the format is: 5*/
+	getchar();
+	return 0;
+}
+
+int main() {
+	int i = 0;	
+	char j[3];
+	scanf("%2s", j);/*scan only first two chars*/
+	printf("%2s", j);/*print only first two chars*/
+	getchar();
+	return 0;
+}

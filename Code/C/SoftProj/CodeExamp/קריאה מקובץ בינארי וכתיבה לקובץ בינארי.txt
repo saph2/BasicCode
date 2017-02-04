@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <assert.h>
+
+int main(int argc, char **argv) {
+	char a[57];
+	int result;
+	/*read bytes to array from bunary file*/
+	FILE *fh = fopen(argv[1], "rb");
+	assert(fh != NULL);/*insted of the if*/
+	if (fh != NULL) {
+		result=fread(a,sizeof(char),56,fh);
+		printf("read: %d", result);
+		fclose(fh);
+	}
+	/*write bytes to array from binary file*/
+	fh = fopen(argv[2], "wb");
+	assert(fh != NULL);/*insted of the if*/
+	if (fh != NULL) {
+		fwrite(a,sizeof (char),56,fh);
+		printf("wrote: %d", result);
+		fclose(fh);
+	}
+	getchar();
+	return 0;
+}
